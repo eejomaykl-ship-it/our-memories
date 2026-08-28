@@ -2,533 +2,652 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#090609">
+
 <title>M & M | Love U Mariam</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0
+:root {
+  --pink: #ff4f91;
+  --pink-light: #ff91ba;
+  --purple: #a93ee6;
+  --black: #080608;
+  --text: #ffffff;
+  --muted: #d7cbd0;
 }
 
-html{
-  scroll-behavior:smooth
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-body{
-  background:#080608;
-  color:white;
-  font-family:Arial,sans-serif;
-  overflow-x:hidden
+html {
+  scroll-behavior: smooth;
 }
 
-section{
-  position:relative;
-  min-height:100vh;
-  padding:80px 22px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  overflow:hidden
+body {
+  background: var(--black);
+  color: var(--text);
+  font-family: Arial, sans-serif;
+  overflow-x: hidden;
 }
 
-.content{
-  position:relative;
-  z-index:2;
-  width:100%;
-  max-width:850px;
-  text-align:center
+button {
+  font: inherit;
 }
 
-.pink{
-  color:#ff4f91
+section {
+  position: relative;
+  min-height: 100vh;
+  padding: 90px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
-.glow{
+.content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 900px;
+  text-align: center;
+}
+
+.section-title {
+  font-size: clamp(35px, 9vw, 70px);
+  line-height: 1.15;
+  margin-bottom: 30px;
+}
+
+.pink {
+  color: var(--pink);
+}
+
+.glow {
   text-shadow:
-    0 0 15px rgba(255,79,145,.9),
-    0 0 45px rgba(255,79,145,.5)
+    0 0 15px rgba(255, 79, 145, .9),
+    0 0 45px rgba(255, 79, 145, .5);
 }
 
-.title{
-  font-size:clamp(35px,10vw,75px);
-  margin-bottom:30px
+.copy {
+  max-width: 760px;
+  margin: auto;
+  color: var(--muted);
+  font-size: clamp(17px, 4.5vw, 23px);
+  line-height: 1.9;
 }
 
-.text{
-  max-width:750px;
-  margin:auto;
-  color:#eee;
-  font-size:clamp(17px,4vw,23px);
-  line-height:1.9
-}
-
-.text p{
-  margin-bottom:22px
+.copy p + p {
+  margin-top: 22px;
 }
 
 /* Loading */
 
-#loader{
-  position:fixed;
-  inset:0;
-  z-index:9999;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+#loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
   background:
-    radial-gradient(circle,#3b1025,#100810 45%,#050405);
-  transition:.8s
+    radial-gradient(circle, #401128, #100810 45%, #050405);
+  transition: opacity .8s, visibility .8s;
 }
 
-#loader.hide{
-  opacity:0;
-  visibility:hidden
+#loader.hide {
+  opacity: 0;
+  visibility: hidden;
 }
 
-.loader-box{
-  text-align:center
+.loader-content {
+  text-align: center;
 }
 
-.loader-logo{
-  font-size:clamp(60px,18vw,130px);
-  font-weight:bold;
-  letter-spacing:5px;
+.loader-logo {
+  font-size: clamp(60px, 18vw, 130px);
+  font-weight: bold;
+  letter-spacing: 6px;
   text-shadow:
-    0 0 20px #ff4f91,
-    0 0 55px rgba(255,79,145,.6);
-  animation:pulse 1s infinite alternate
+    0 0 20px var(--pink),
+    0 0 55px rgba(255, 79, 145, .6);
+  animation: loaderPulse 1s infinite alternate;
 }
 
-.loader-heart{
-  margin-top:15px;
-  font-size:38px;
-  color:#ff4f91;
-  animation:beat .8s infinite
+.loader-heart {
+  margin-top: 15px;
+  color: var(--pink);
+  font-size: 40px;
+  animation: heartBeat .8s infinite;
 }
 
-.loading-line{
-  width:200px;
-  height:5px;
-  margin:25px auto;
-  background:#3d2731;
-  border-radius:10px;
-  overflow:hidden
+.loader-line {
+  width: 210px;
+  height: 5px;
+  margin: 25px auto;
+  border-radius: 10px;
+  background: #3d2731;
+  overflow: hidden;
 }
 
-.loading-line::after{
-  content:"";
-  display:block;
-  width:0;
-  height:100%;
-  background:linear-gradient(90deg,#ff4f91,#a93ee6);
-  animation:loading 2.2s forwards
+.loader-line::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 100%;
+  background: linear-gradient(90deg, var(--pink), var(--purple));
+  animation: loading 2.2s forwards;
 }
 
-/* Photo backgrounds */
+/* Background photos */
 
-.photo-bg{
-  position:absolute;
-  inset:-5%;
-  background-size:cover;
-  background-position:center;
-  transform:scale(1.05);
-  transition:transform 10s
+.photo-bg {
+  position: absolute;
+  inset: -5%;
+  background-position: center;
+  background-size: cover;
+  transform: scale(1.05);
+  transition: transform 10s ease;
 }
 
-section.active .photo-bg{
-  transform:scale(1.15)
+section.active .photo-bg {
+  transform: scale(1.15);
 }
 
-.overlay{
-  position:absolute;
-  inset:0;
-  background:linear-gradient(
-    rgba(0,0,0,.42),
-    rgba(5,3,5,.88)
-  )
-}
-
-/* Hero */
-
-#hero{
-  padding:25px
-}
-
-#hero .photo-bg{
-  background-image:url("IMG_1610.jpeg")
-}
-
-.hero-title{
-  font-size:clamp(55px,15vw,120px);
-  line-height:.95;
-  font-weight:bold;
-  text-transform:uppercase;
-  text-shadow:0 5px 30px black
-}
-
-.hero-title span{
-  display:block;
-  color:#ff4f91;
-  text-shadow:
-    0 0 20px #ff4f91,
-    0 0 60px rgba(255,79,145,.6)
-}
-
-.hero-text{
-  margin:35px 0;
-  font-size:clamp(20px,5vw,32px);
-  text-shadow:0 3px 20px black
-}
-
-.open-btn{
-  border:0;
-  padding:17px 60px;
-  border-radius:50px;
-  color:white;
-  font-size:20px;
-  font-weight:bold;
-  letter-spacing:4px;
-  background:linear-gradient(90deg,#ff4f91,#a93ee6);
-  box-shadow:0 10px 40px rgba(255,79,145,.5);
-  animation:buttonGlow 1.5s infinite alternate;
-  cursor:pointer
-}
-
-.down{
-  position:absolute;
-  z-index:3;
-  bottom:20px;
-  left:50%;
-  transform:translateX(-50%);
-  font-size:35px;
-  animation:down 1.3s infinite
-}
-
-/* Change section */
-
-#change .photo-bg{
-  background-image:url("IMG_2111.jpeg")
-}
-
-.card{
-  padding:clamp(25px,7vw,60px);
-  border:1px solid rgba(255,255,255,.15);
-  border-radius:30px;
-  background:rgba(8,5,8,.67);
-  backdrop-filter:blur(10px);
-  box-shadow:0 25px 70px rgba(0,0,0,.55)
-}
-
-/* Videos */
-
-.video-section{
+.overlay {
+  position: absolute;
+  inset: 0;
   background:
-    radial-gradient(circle at top,#3b1025,#100810 40%,#070507)
+    linear-gradient(
+      rgba(0, 0, 0, .38),
+      rgba(5, 3, 5, .9)
+    );
 }
 
-.video-frame{
-  width:min(400px,94vw);
-  margin:30px auto;
-  padding:10px;
-  border:2px solid rgba(255,79,145,.75);
-  border-radius:35px;
-  background:#050405;
+/* First page */
+
+#hero {
+  padding: 25px;
+}
+
+#hero .photo-bg {
+  background-image: url("IMG_1610.jpeg");
+}
+
+#hero .overlay {
+  background:
+    linear-gradient(
+      rgba(0, 0, 0, .25),
+      rgba(5, 3, 5, .84)
+    );
+}
+
+.hero-title {
+  font-size: clamp(55px, 15vw, 120px);
+  line-height: .95;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-shadow: 0 5px 30px #000;
+}
+
+.hero-title span {
+  display: block;
+  color: var(--pink);
+  text-shadow:
+    0 0 20px var(--pink),
+    0 0 60px rgba(255, 79, 145, .6);
+}
+
+.hero-text {
+  margin: 35px 0;
+  font-size: clamp(20px, 5vw, 32px);
+  text-shadow: 0 3px 20px #000;
+}
+
+.open-button {
+  border: 0;
+  border-radius: 50px;
+  padding: 17px 60px;
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+  letter-spacing: 4px;
+  background:
+    linear-gradient(90deg, var(--pink), var(--purple));
+  box-shadow: 0 10px 40px rgba(255, 79, 145, .5);
+  animation: buttonGlow 1.5s infinite alternate;
+  cursor: pointer;
+}
+
+.scroll-arrow {
+  position: absolute;
+  z-index: 3;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 35px;
+  animation: arrowMove 1.3s infinite;
+}
+
+/* Change message */
+
+#change .photo-bg {
+  background-image: url("IMG_2111.jpeg");
+}
+
+.message-card {
+  padding: clamp(25px, 7vw, 60px);
+  border: 1px solid rgba(255, 255, 255, .15);
+  border-radius: 30px;
+  background: rgba(8, 5, 8, .69);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 25px 70px rgba(0, 0, 0, .55);
+}
+
+/* Video sections */
+
+.video-section {
+  background:
+    radial-gradient(
+      circle at top,
+      #401128,
+      #100810 40%,
+      #070507
+    );
+}
+
+.video-frame {
+  position: relative;
+  width: min(410px, 94vw);
+  margin: 35px auto;
+  padding: 47px 11px 11px;
+  border: 2px solid rgba(255, 79, 145, .8);
+  border-radius: 37px;
+  background: #050405;
+  overflow: hidden;
   box-shadow:
-    0 0 40px rgba(255,79,145,.3),
-    0 25px 60px black
+    0 0 20px rgba(255, 79, 145, .5),
+    0 0 55px rgba(255, 79, 145, .25),
+    0 30px 70px rgba(0, 0, 0, .8);
 }
 
-.video-frame.wide{
-  width:min(720px,94vw);
-  border-color:#a93ee6
-}
-
-video{
-  display:block;
-  width:100%;
-  max-height:72vh;
-  object-fit:contain;
-  border-radius:25px;
-  background:black
-}
-
-.video-message{
-  margin-top:35px;
-  font-size:clamp(21px,5vw,34px);
-  font-weight:bold;
-  line-height:1.6
-}
-
-/* Gallery */
-
-#gallery{
+.video-frame::before {
+  content: "M  ♥  M";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 37px;
+  display: grid;
+  place-items: center;
+  color: var(--pink-light);
+  font-weight: bold;
+  letter-spacing: 7px;
   background:
-    linear-gradient(150deg,#070507,#210b18,#070507)
+    linear-gradient(
+      90deg,
+      #1a0c14,
+      #461128,
+      #1a0c14
+    );
 }
 
-.gallery{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:20px;
-  max-width:760px;
-  margin:40px auto
+.video-frame::after {
+  content: "";
+  position: absolute;
+  top: 14px;
+  left: 18px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--pink);
+  box-shadow:
+    14px 0 0 #a93ee6,
+    28px 0 0 #ffffff;
 }
 
-.photo{
-  border:0;
-  padding:10px 10px 38px;
-  background:#fff;
-  box-shadow:0 20px 50px rgba(0,0,0,.55);
-  transition:.4s;
-  cursor:pointer
+.video-frame.wide {
+  width: min(740px, 94vw);
+  border-color: rgba(169, 62, 230, .85);
+  box-shadow:
+    0 0 25px rgba(169, 62, 230, .5),
+    0 0 60px rgba(255, 79, 145, .2),
+    0 30px 70px rgba(0, 0, 0, .8);
 }
 
-.photo:nth-child(1){
-  transform:rotate(-3deg)
+video {
+  display: block;
+  width: 100%;
+  max-height: 72vh;
+  border-radius: 27px;
+  object-fit: contain;
+  background: #000;
 }
 
-.photo:nth-child(2){
-  transform:rotate(3deg)
+.after-video {
+  margin-top: 35px;
+  font-size: clamp(21px, 5vw, 34px);
+  font-weight: bold;
+  line-height: 1.6;
 }
 
-.photo:nth-child(3){
-  transform:rotate(2deg)
-}
+/* Photos gallery */
 
-.photo:nth-child(4){
-  transform:rotate(-2deg)
-}
-
-.photo:hover,
-.photo:active{
-  transform:rotate(0) scale(1.04)
-}
-
-.photo img{
-  display:block;
-  width:100%;
-  aspect-ratio:4/5;
-  object-fit:cover
-}
-
-.divider{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  width:300px;
-  max-width:80%;
-  margin:35px auto;
-  color:#ff4f91
-}
-
-.divider::before,
-.divider::after{
-  content:"";
-  height:1px;
-  flex:1;
-  background:#ff4f91
-}
-
-/* Choice */
-
-#choice{
-  min-height:65vh;
+#gallery {
   background:
-    radial-gradient(circle,#421127,#0a0609 60%)
+    linear-gradient(
+      150deg,
+      #070507,
+      #250c1a,
+      #070507
+    );
 }
 
-.choice-text{
-  font-size:clamp(35px,9vw,80px);
-  line-height:1.4;
-  font-weight:bold
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  width: 100%;
+  max-width: 760px;
+  margin: 40px auto;
 }
 
-/* Final */
-
-#final .photo-bg{
-  background-image:url("IMG_6933.jpeg")
+.polaroid {
+  position: relative;
+  border: 0;
+  padding: 10px 10px 40px;
+  background: #fff;
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, .6),
+    0 0 25px rgba(255, 79, 145, .15);
+  transition: transform .4s, box-shadow .4s;
+  cursor: pointer;
 }
 
-.arabic{
-  direction:rtl;
-  font-family:Arial,sans-serif;
-  font-size:clamp(20px,5vw,30px);
-  line-height:2;
-  color:#fff
+.polaroid::after {
+  content: "M ♥ M";
+  position: absolute;
+  left: 0;
+  bottom: 10px;
+  width: 100%;
+  color: #75143a;
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 3px;
+  text-align: center;
+}
+
+.polaroid:nth-child(1) {
+  transform: rotate(-3deg);
+}
+
+.polaroid:nth-child(2) {
+  transform: rotate(3deg);
+}
+
+.polaroid:nth-child(3) {
+  transform: rotate(2deg);
+}
+
+.polaroid:nth-child(4) {
+  transform: rotate(-2deg);
+}
+
+.polaroid:hover,
+.polaroid:active {
+  z-index: 3;
+  transform: rotate(0) scale(1.045);
+  box-shadow:
+    0 25px 60px rgba(0, 0, 0, .7),
+    0 0 35px rgba(255, 79, 145, .4);
+}
+
+.polaroid img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+.heart-divider {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  width: min(340px, 80%);
+  margin: 38px auto;
+  color: var(--pink);
+}
+
+.heart-divider::before,
+.heart-divider::after {
+  content: "";
+  height: 1px;
+  flex: 1;
+  background: var(--pink);
+}
+
+/* Choice section */
+
+#choice {
+  min-height: 65vh;
+  background:
+    radial-gradient(
+      circle,
+      #461128,
+      #0a0609 60%
+    );
+}
+
+.choice-line {
+  font-size: clamp(35px, 9vw, 80px);
+  line-height: 1.4;
+  font-weight: bold;
+}
+
+/* Final message */
+
+#final .photo-bg {
+  background-image: url("IMG_6933.jpeg");
+}
+
+.arabic {
+  direction: rtl;
+  font-size: clamp(20px, 5vw, 30px);
+  line-height: 2;
+  color: #fff;
 }
 
 /* Ending */
 
-#ending{
-  min-height:75vh;
+#ending {
+  min-height: 75vh;
   background:
-    radial-gradient(circle,#461229,#0c070b 50%,#040304)
+    radial-gradient(
+      circle,
+      #49122b,
+      #0c070b 50%,
+      #040304
+    );
 }
 
-.end-title{
-  font-size:clamp(55px,14vw,120px);
-  font-weight:bold;
-  line-height:1
+.ending-logo {
+  font-size: clamp(55px, 14vw, 120px);
+  font-weight: bold;
+  line-height: 1;
 }
 
-.end-title span{
-  display:block;
-  color:#ff4f91;
+.ending-logo span {
+  display: block;
+  color: var(--pink);
   text-shadow:
-    0 0 20px #ff4f91,
-    0 0 60px rgba(255,79,145,.6)
+    0 0 20px var(--pink),
+    0 0 60px rgba(255, 79, 145, .6);
 }
 
-.signature{
-  margin-top:40px;
-  font-size:clamp(28px,7vw,50px);
-  letter-spacing:5px
+.signature {
+  margin-top: 40px;
+  font-size: clamp(28px, 7vw, 50px);
+  letter-spacing: 6px;
 }
 
 /* Reveal animation */
 
-.reveal{
-  opacity:0;
-  transform:translateY(50px);
-  transition:1s
+.reveal {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 1s, transform 1s;
 }
 
-.reveal.show{
-  opacity:1;
-  transform:translateY(0)
+.reveal.show {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-/* Progress */
+/* Top progress */
 
-#progress{
-  position:fixed;
-  top:0;
-  left:0;
-  z-index:1000;
-  height:4px;
-  width:0;
-  background:linear-gradient(90deg,#ff4f91,#a93ee6);
-  box-shadow:0 0 12px #ff4f91
+#progress-line {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  width: 0;
+  height: 4px;
+  background:
+    linear-gradient(90deg, var(--pink), var(--purple));
+  box-shadow: 0 0 12px var(--pink);
 }
 
 /* Music and top buttons */
 
-.circle-btn{
-  position:fixed;
-  z-index:100;
-  right:18px;
-  width:52px;
-  height:52px;
-  border-radius:50%;
-  border:1px solid rgba(255,255,255,.25);
-  background:rgba(20,8,16,.75);
-  backdrop-filter:blur(8px);
-  color:white;
-  font-size:20px;
-  cursor:pointer
+.circle-button {
+  position: fixed;
+  z-index: 100;
+  right: 18px;
+  width: 52px;
+  height: 52px;
+  border: 1px solid rgba(255, 255, 255, .25);
+  border-radius: 50%;
+  color: #fff;
+  font-size: 20px;
+  background: rgba(20, 8, 16, .78);
+  backdrop-filter: blur(8px);
+  cursor: pointer;
 }
 
-#musicBtn{
-  top:18px
+#music-button {
+  top: 18px;
 }
 
-#topBtn{
-  bottom:18px;
-  opacity:0;
-  pointer-events:none;
-  transition:.4s
+#top-button {
+  bottom: 18px;
+  opacity: 0;
+  pointer-events: none;
+  transition: .4s;
 }
 
-#topBtn.show{
-  opacity:1;
-  pointer-events:auto
+#top-button.show {
+  opacity: 1;
+  pointer-events: auto;
 }
 
-/* Hearts */
+/* Floating hearts */
 
-.floating-heart{
-  position:fixed;
-  z-index:1;
-  bottom:-40px;
-  color:rgba(255,79,145,.45);
-  pointer-events:none;
-  animation:floatHeart linear forwards
+.floating-heart {
+  position: fixed;
+  z-index: 1;
+  bottom: -40px;
+  color: rgba(255, 79, 145, .45);
+  pointer-events: none;
+  animation: floatingHeart linear forwards;
 }
 
-/* Lightbox */
+/* Full photo viewer */
 
-#lightbox{
-  position:fixed;
-  inset:0;
-  z-index:5000;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:15px;
-  background:rgba(0,0,0,.95)
+#lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  background: rgba(0, 0, 0, .95);
 }
 
-#lightbox.open{
-  display:flex
+#lightbox.open {
+  display: flex;
 }
 
-#lightbox img{
-  max-width:96vw;
-  max-height:90vh;
-  object-fit:contain;
-  border-radius:15px
+#lightbox img {
+  max-width: 96vw;
+  max-height: 90vh;
+  border-radius: 15px;
+  object-fit: contain;
 }
 
-#closeLightbox{
-  position:absolute;
-  top:18px;
-  right:18px;
-  width:50px;
-  height:50px;
-  border:0;
-  border-radius:50%;
-  background:white;
-  color:black;
-  font-size:30px;
-  cursor:pointer
+#close-lightbox {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 50px;
+  height: 50px;
+  border: 0;
+  border-radius: 50%;
+  color: #000;
+  font-size: 30px;
+  background: #fff;
+  cursor: pointer;
 }
 
-@media(min-width:750px){
-  .gallery{
-    grid-template-columns:repeat(4,1fr)
+@media (min-width: 750px) {
+  .gallery-grid {
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
-@keyframes loading{
-  to{width:100%}
-}
-
-@keyframes pulse{
-  to{transform:scale(1.06)}
-}
-
-@keyframes beat{
-  50%{transform:scale(1.3)}
-}
-
-@keyframes buttonGlow{
-  to{
-    box-shadow:0 10px 60px rgba(255,79,145,.8)
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
   }
 }
 
-@keyframes down{
-  50%{
-    transform:translate(-50%,10px)
+@keyframes loading {
+  to {
+    width: 100%;
   }
 }
 
-@keyframes floatHeart{
-  to{
-    transform:translateY(-115vh) rotate(360deg);
-    opacity:0
+@keyframes loaderPulse {
+  to {
+    transform: scale(1.06);
+  }
+}
+
+@keyframes heartBeat {
+  50% {
+    transform: scale(1.3);
+  }
+}
+
+@keyframes buttonGlow {
+  to {
+    box-shadow: 0 10px 65px rgba(255, 79, 145, .85);
+  }
+}
+
+@keyframes arrowMove {
+  50% {
+    transform: translate(-50%, 10px);
+  }
+}
+
+@keyframes floatingHeart {
+  to {
+    transform: translateY(-115vh) rotate(360deg);
+    opacity: 0;
   }
 }
 </style>
@@ -536,29 +655,47 @@ video{
 
 <body>
 
+<!-- Loading screen -->
+
 <div id="loader">
-  <div class="loader-box">
+  <div class="loader-content">
     <div class="loader-logo">M &amp; M</div>
     <div class="loader-heart">♥</div>
-    <div class="loading-line"></div>
+    <div class="loader-line"></div>
   </div>
 </div>
 
-<div id="progress"></div>
+<div id="progress-line"></div>
 
-<button class="circle-btn" id="musicBtn">♫</button>
-<button class="circle-btn" id="topBtn">♥</button>
+<button
+  class="circle-button"
+  id="music-button"
+  aria-label="Play or pause music">
+  ♫
+</button>
 
-<!-- لو رفعت أغنية سمّيها music.mp3 -->
+<button
+  class="circle-button"
+  id="top-button"
+  aria-label="Back to top">
+  ♥
+</button>
+
+<!-- ارفع أغنية باسم music.mp3 لو عايز موسيقى -->
+
 <audio id="music" src="music.mp3" loop></audio>
 
 <main>
 
+<!-- First page -->
+
 <section id="hero">
+
   <div class="photo-bg"></div>
   <div class="overlay"></div>
 
   <div class="content reveal">
+
     <h1 class="hero-title">
       LOVE U
       <span>MARIAM</span>
@@ -568,25 +705,32 @@ video{
       E7na nestahal forsa a7san.
     </p>
 
-    <button class="open-btn" id="openBtn">
+    <button class="open-button" id="open-button">
       OPEN
     </button>
+
   </div>
 
-  <div class="down">⌄</div>
+  <div class="scroll-arrow">⌄</div>
+
 </section>
 
+<!-- Change message -->
+
 <section id="change">
+
   <div class="photo-bg"></div>
   <div class="overlay"></div>
 
-  <div class="content card reveal">
-    <h2 class="title">
+  <div class="content message-card reveal">
+
+    <h2 class="section-title">
       Ana bgad
       <span class="pink glow">etghayart.</span>
     </h2>
 
-    <div class="text">
+    <div class="copy">
+
       <p>
         Ana 3aref en el kalam lwa7do msh kefaya,
         bas ana bgad etghayart.
@@ -602,134 +746,176 @@ video{
         Ana 3ayez nebda men gedid,
         b tafahom aktar, w b nos5a a7san meny. ❤️
       </p>
+
     </div>
+
   </div>
+
 </section>
 
-<section class="video-section">
+<!-- Small video -->
+
+<section class="video-section" id="small-video">
+
   <div class="content reveal">
 
-    <h2 class="title">
+    <h2 class="section-title">
       Fakra de? 😂❤️
     </h2>
 
     <div class="video-frame">
-      <video controls playsinline preload="metadata">
-        <source
-          src="7C6CF41F-D040-4F12-8FC6-70D1D77A69F0.mov"
-          type="video/quicktime">
+
+      <video
+        controls
+        playsinline
+        preload="metadata"
+        poster="IMG_2113.jpeg"
+        src="copy_D30F8AD1-7D4E-4D42-A018-55CFD9D41745.mov">
       </video>
+
     </div>
 
-    <p class="video-message">
+    <p class="after-video">
       Ana b7bk awy ya Roma,
       w msh h3oz 7ad zyk bgd 💓
     </p>
 
   </div>
+
 </section>
 
+<!-- Photos -->
+
 <section id="gallery">
+
   <div class="content reveal">
 
-    <h2 class="title">
-      Our <span class="pink glow">Memories</span> 📸❤️
+    <h2 class="section-title">
+      Our
+      <span class="pink glow">Memories</span>
+      📸❤️
     </h2>
 
-    <div class="gallery">
+    <div class="gallery-grid">
 
-      <button class="photo">
+      <button class="polaroid">
         <img src="IMG_1610.jpeg" alt="Our memory 1">
       </button>
 
-      <button class="photo">
+      <button class="polaroid">
         <img src="IMG_2111.jpeg" alt="Our memory 2">
       </button>
 
-      <button class="photo">
+      <button class="polaroid">
         <img src="IMG_2113.jpeg" alt="Our memory 3">
       </button>
 
-      <button class="photo">
+      <button class="polaroid">
         <img src="IMG_6933.jpeg" alt="Our memory 4">
       </button>
 
     </div>
 
-    <div class="divider">♥</div>
+    <div class="heart-divider">♥</div>
 
-    <p class="text">
+    <p class="copy">
       Kam sora bas… wara kol wa7da
       fe 7ekaya w zekrayat kteer.
     </p>
 
   </div>
+
 </section>
 
-<section class="video-section">
+<!-- Big memories video -->
+
+<section class="video-section" id="memories-video">
+
   <div class="content reveal">
 
-    <h2 class="title">
-      <span class="pink glow">Zekrayatna</span> 🎬❤️
+    <h2 class="section-title">
+      <span class="pink glow">Zekrayatna</span>
+      🎬❤️
     </h2>
 
     <div class="video-frame wide">
-      <video controls playsinline preload="metadata">
-        <source
-          src="copy_74B0BDB7-D3D2-4C28-9E55-D951A10EC0D6.mov"
-          type="video/quicktime">
+
+      <video
+        controls
+        playsinline
+        preload="metadata"
+        poster="IMG_6933.jpeg"
+        src="copy_74B0BDB7-D3D2-4C28-9E55-D951A10EC0D6.mov">
       </video>
+
     </div>
 
-    <p class="text">
+    <p class="copy">
       Momken el wa2t y3ady…
       bas el zekrayat el 7elwa btefdal.
     </p>
 
   </div>
+
 </section>
 
+<!-- Before final -->
+
 <section id="choice">
+
   <div class="content reveal">
 
-    <p class="choice-text">
+    <p class="choice-line">
       W fe el a5er…
       <br>
+
       <span class="pink glow">
         ana lesa ba5tarek enty. 💓
       </span>
     </p>
 
   </div>
+
 </section>
 
+<!-- Final Arabic message -->
+
 <section id="final">
+
   <div class="photo-bg"></div>
   <div class="overlay"></div>
 
-  <div class="content card reveal">
+  <div class="content message-card reveal">
 
-    <h2 class="title pink glow">
+    <h2 class="section-title pink glow">
       LOVE U MARIAM ❤️
     </h2>
 
     <p class="arabic">
+
       يا مريم، أنا شايف إن اللي بينا يستاهل نحاول تاني،
       وكل حاجة تتعمل عشانك.
+
       <br><br>
-      أنا محبتش قدك. إنتِ بالنسبالي الشخص اللي حسيت
-      معاه كل حاجة بجد، والشخص اللي غيّر فيا.
+
+     
       <br><br>
+طول عمري بتمني اني اكمل حياتي معاكي محبتش ولا هحب قدك عارف اني زعلتك كتير ويمكن انا السبب في كل حاجه بس زي ما انا السبب انا بوعدك اني هصلح كل ده انا مليش غيرك يقلبييي انتي الوحيده الي حبيتك بالشكل ده وبالطريقه دي انا عايزك عشان انتي الوحيده الي كنتي بتخرجينا من كل ضغط ومن كل حاجه وحشه في حياتي وعشان عارف انك الشخص الصح💓
       بحبك أوي 💓
+
     </p>
 
   </div>
+
 </section>
 
+<!-- Ending -->
+
 <section id="ending">
+
   <div class="content reveal">
 
-    <div class="end-title">
+    <div class="ending-logo">
       LOVE U
       <span>MARIAM</span>
     </div>
@@ -739,141 +925,212 @@ video{
     </div>
 
   </div>
+
 </section>
 
 </main>
 
+<!-- Full photo viewer -->
+
 <div id="lightbox">
-  <button id="closeLightbox">×</button>
-  <img id="lightboxImg" src="" alt="Our memory">
+
+  <button id="close-lightbox">×</button>
+
+  <img
+    id="lightbox-image"
+    src=""
+    alt="Our memory">
+
 </div>
 
 <script>
 const loader = document.getElementById("loader");
 const music = document.getElementById("music");
-const musicBtn = document.getElementById("musicBtn");
-const openBtn = document.getElementById("openBtn");
-const topBtn = document.getElementById("topBtn");
-const progress = document.getElementById("progress");
+const musicButton = document.getElementById("music-button");
+const openButton = document.getElementById("open-button");
+const topButton = document.getElementById("top-button");
+const progressLine = document.getElementById("progress-line");
 
 let musicPlaying = false;
 
-window.addEventListener("load", function(){
-  setTimeout(function(){
+/* Hide loading */
+
+window.addEventListener("load", function () {
+
+  setTimeout(function () {
     loader.classList.add("hide");
-  },2200);
+  }, 2200);
+
 });
 
-openBtn.addEventListener("click", function(){
+/* Open button and music */
+
+openButton.addEventListener("click", function () {
+
   document.getElementById("change").scrollIntoView({
-    behavior:"smooth"
+    behavior: "smooth"
   });
 
-  music.play().then(function(){
+  music.play().then(function () {
+
     musicPlaying = true;
-    musicBtn.textContent = "❚❚";
-  }).catch(function(){});
+    musicButton.textContent = "❚❚";
+
+  }).catch(function () {});
+
 });
 
-musicBtn.addEventListener("click", function(){
-  if(musicPlaying){
+/* Music button */
+
+musicButton.addEventListener("click", function () {
+
+  if (musicPlaying) {
+
     music.pause();
     musicPlaying = false;
-    musicBtn.textContent = "♫";
-  }else{
-    music.play().then(function(){
+    musicButton.textContent = "♫";
+
+  } else {
+
+    music.play().then(function () {
+
       musicPlaying = true;
-      musicBtn.textContent = "❚❚";
-    }).catch(function(){
-      alert("ارفع الأغنية باسم music.mp3");
+      musicButton.textContent = "❚❚";
+
+    }).catch(function () {
+
+    
+
     });
+
   }
+
 });
 
-const observer = new IntersectionObserver(function(entries){
-  entries.forEach(function(entry){
-    if(entry.isIntersecting){
+/* Scroll reveal */
+
+const observer = new IntersectionObserver(function (entries) {
+
+  entries.forEach(function (entry) {
+
+    if (entry.isIntersecting) {
+
       entry.target.classList.add("show");
 
       const section = entry.target.closest("section");
-      if(section){
+
+      if (section) {
         section.classList.add("active");
       }
+
     }
+
   });
-},{
-  threshold:.18
+
+}, {
+  threshold: .18
 });
 
-document.querySelectorAll(".reveal").forEach(function(element){
+document.querySelectorAll(".reveal").forEach(function (element) {
   observer.observe(element);
 });
 
-window.addEventListener("scroll", function(){
+/* Scroll progress */
+
+window.addEventListener("scroll", function () {
+
   const pageHeight =
-    document.documentElement.scrollHeight - window.innerHeight;
+    document.documentElement.scrollHeight -
+    window.innerHeight;
 
   const percentage =
-    pageHeight > 0 ? (window.scrollY / pageHeight) * 100 : 0;
+    pageHeight > 0
+      ? (window.scrollY / pageHeight) * 100
+      : 0;
 
-  progress.style.width = percentage + "%";
+  progressLine.style.width = percentage + "%";
 
-  if(window.scrollY > 700){
-    topBtn.classList.add("show");
-  }else{
-    topBtn.classList.remove("show");
+  if (window.scrollY > 700) {
+    topButton.classList.add("show");
+  } else {
+    topButton.classList.remove("show");
   }
+
 });
 
-topBtn.addEventListener("click", function(){
+/* Back to top */
+
+topButton.addEventListener("click", function () {
+
   window.scrollTo({
-    top:0,
-    behavior:"smooth"
+    top: 0,
+    behavior: "smooth"
   });
+
 });
+
+/* Open photos */
 
 const lightbox = document.getElementById("lightbox");
-const lightboxImg = document.getElementById("lightboxImg");
-const closeLightbox = document.getElementById("closeLightbox");
+const lightboxImage = document.getElementById("lightbox-image");
+const closeLightbox = document.getElementById("close-lightbox");
 
-document.querySelectorAll(".photo img").forEach(function(img){
-  img.parentElement.addEventListener("click", function(){
-    lightboxImg.src = img.src;
+document.querySelectorAll(".polaroid img").forEach(function (image) {
+
+  image.parentElement.addEventListener("click", function () {
+
+    lightboxImage.src = image.src;
     lightbox.classList.add("open");
     document.body.style.overflow = "hidden";
+
   });
+
 });
 
-function closePhoto(){
+function closePhoto() {
+
   lightbox.classList.remove("open");
   document.body.style.overflow = "";
+
 }
 
 closeLightbox.addEventListener("click", closePhoto);
 
-lightbox.addEventListener("click", function(event){
-  if(event.target === lightbox){
+lightbox.addEventListener("click", function (event) {
+
+  if (event.target === lightbox) {
     closePhoto();
   }
+
 });
 
-function createHeart(){
+/* Floating hearts */
+
+function createHeart() {
+
   const heart = document.createElement("span");
 
   heart.className = "floating-heart";
   heart.textContent = "♥";
-  heart.style.left = Math.random() * 100 + "vw";
-  heart.style.fontSize = 14 + Math.random() * 25 + "px";
-  heart.style.animationDuration = 5 + Math.random() * 5 + "s";
+
+  heart.style.left =
+    Math.random() * 100 + "vw";
+
+  heart.style.fontSize =
+    14 + Math.random() * 25 + "px";
+
+  heart.style.animationDuration =
+    5 + Math.random() * 5 + "s";
 
   document.body.appendChild(heart);
 
-  setTimeout(function(){
+  setTimeout(function () {
     heart.remove();
-  },10000);
+  }, 10000);
+
 }
 
-setInterval(createHeart,850);
+setInterval(createHeart, 850);
 </script>
 
 </body>
