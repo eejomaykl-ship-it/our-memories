@@ -1,1 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>M & M | Love U Mariam</title>
 
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0
+}
+
+html{
+  scroll-behavior:smooth
+}
+
+body{
+  background:#080608;
+  color:white;
+  font-family:Arial,sans-serif;
+  overflow-x:hidden
+}
+
+section{
+  position:relative;
+  min-height:100vh;
+  padding:80px 22px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden
+}
+
+.content{
+  position:relative;
+  z-index:2;
+  width:100%;
+  max-width:850px;
+  text-align:center
+}
+
+.pink{
+  color:#ff4f91
+}
+
+.glow{
+  text-shadow:
+    0 0 15px rgba(255,79,145,.9),
+    0 0 45px rgba(255,79,145,.5)
+}
+
+.title{
+  font-size:clamp(35px,10vw,75px);
+  margin-bottom:30px
+}
+
+.text{
+  max-width:750px;
+  margin:auto;
+  color:#eee;
+  font-size:clamp(17px,4vw,23px);
+  line-height:1.9
+}
+
+.text p{
+  margin-bottom:22px
+}
+
+/* Loading */
+
+#loader{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:
+    radial-gradient(circle,#3b1025,#100810 45%,#050405);
+  transition:.8s
+}
+
+#loader.hide{
+  opacity:0;
+  visibility:hidden
+}
+
+.loader-box{
+  text-align:center
+}
+
+.loader-logo{
+  font-size:clamp(60px,18vw,130px);
+  font-weight:bold;
+  letter-spacing:5px;
+  text-shadow:
+    0 0 20px #ff4f91,
+    0 0 55px rgba(255,79,145,.6);
+  animation:pulse 1s infinite alternate
+}
+
+.loader-heart{
+  margin-top:15px;
+  font-size:38px;
+  color:#ff4f91;
+  animation:beat .8s infinite
+}
+
+.loading-line{
+  width:200px;
+  height:5px;
+  margin:25px auto;
+  background:#3d2731;
+  border-radius:10px;
+  overflow:hidden
+}
+
+.loading-line::after{
+  content:"";
+  display:block;
+  width:0;
+  height:100%;
+  background:linear-gradient(90deg,#ff4f91,#a93ee6);
+  animation:loading 2.2s forwards
+}
+
+/* Photo backgrounds */
+
+.photo-bg{
+  position:absolute;
+  inset:-5%;
+  background-size:cover;
+  background-position:center;
+  transform:scale(1.05);
+  transition:transform 10s
+}
+
+section.active .photo-bg{
+  transform:scale(1.15)
+}
+
+.overlay{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(
+    rgba(0,0,0,.42),
+    rgba(5,3,5,.88)
+  )
+}
+
+/* Hero */
+
+#hero{
+  padding:25px
+}
+
+#hero .photo-bg{
+  background-image:url("IMG_1610.jpeg")
+}
+
+.hero-title{
+  font-size:clamp(55px,15vw,120px);
+  line-height:.95;
+  font-weight:bold;
+  text-transform:uppercase;
+  text-shadow:0 5px 30px black
+}
+
+.hero-title span{
+  display:block;
+  color:#ff4f91;
+  text-shadow:
+    0 0 20px #ff4f91,
+    0 0 60px rgba(255,79,145,.6)
+}
+
+.hero-text{
+  margin:35px 0;
+  font-size:clamp(20px,5vw,32px);
+  text-shadow:0 3px 20px black
+}
+
+.open-btn{
+  border:0;
+  padding:17px 60px;
+  border-radius:50px;
+  color:white;
+  font-size:20px;
+  font-weight:bold;
+  letter-spacing:4px;
+  background:linear-gradient(90deg,#ff4f91,#a93ee6);
+  box-shadow:0 10px 40px rgba(255,79,145,.5);
+  animation:buttonGlow 1.5s infinite alternate;
+  cursor:pointer
+}
+
+.down{
+  position:absolute;
+  z-index:3;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:35px;
+  animation:down 1.3s infinite
+}
+
+/* Change section */
+
+#change .photo-bg{
+  background-image:url("IMG_2111.jpeg")
+}
+
+.card{
+  padding:clamp(25px,7vw,60px);
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:30px;
+  background:rgba(8,5,8,.67);
+  backdrop-filter:blur(10px);
+  box-shadow:0 25px 70px rgba(0,0,0,.55)
+}
+
+/* Videos */
+
+.video-section{
+  background:
+    radial-gradient(circle at top,#3b1025,#100810 40%,#070507)
+}
+
+.video-frame{
+  width:min(400px,94vw);
+  margin:30px auto;
+  padding:10px;
+  border:2px solid rgba(255,79,145,.75);
+  border-radius:35px;
+  background:#050405;
+  box-shadow:
+    0 0 40px rgba(255,79,145,.3),
+    0 25px 60px black
+}
+
+.video-frame.wide{
+  width:min(720px,94vw);
+  border-color:#a93ee6
+}
+
+video{
+  display:block;
+  width:100%;
+  max-height:72vh;
+  object-fit:contain;
+  border-radius:25px;
+  background:black
+}
+
+.video-message{
+  margin-top:35px;
+  font-size:clamp(21px,5vw,34px);
+  font-weight:bold;
+  line-height:1.6
+}
+
+/* Gallery */
+
+#gallery{
+  background:
+    linear-gradient(150deg,#070507,#210b18,#070507)
+}
+
+.gallery{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:20px;
+  max-width:760px;
+  margin:40px auto
+}
+
+.photo{
+  border:0;
+  padding:10px 10px 38px;
+  background:#fff;
+  box-shadow:0 20px 50px rgba(0,0,0,.55);
+  transition:.4s;
+  cursor:pointer
+}
+
+.photo:nth-child(1){
+  transform:rotate(-3deg)
+}
+
+.photo:nth-child(2){
+  transform:rotate(3deg)
+}
+
+.photo:nth-child(3){
+  transform:rotate(2deg)
+}
+
+.photo:nth-child(4){
+  transform:rotate(-2deg)
+}
+
+.photo:hover,
+.photo:active{
+  transform:rotate(0) scale(1.04)
+}
+
+.photo img{
+  display:block;
+  width:100%;
+  aspect-ratio:4/5;
+  object-fit:cover
+}
+
+.divider{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  width:300px;
+  max-width:80%;
+  margin:35px auto;
+  color:#ff4f91
+}
+
+.divider::before,
+.divider::after{
+  content:"";
+  height:1px;
+  flex:1;
+  background:#ff4f91
+}
+
+/* Choice */
+
+#choice{
+  min-height:65vh;
+  background:
+    radial-gradient(circle,#421127,#0a0609 60%)
+}
+
+.choice-text{
+  font-size:clamp(35px,9vw,80px);
+  line-height:1.4;
+  font-weight:bold
+}
+
+/* Final */
+
+#final .photo-bg{
+  background-image:url("IMG_6933.jpeg")
+}
+
+.arabic{
+  direction:rtl;
+  font-family:Arial,sans-serif;
+  font-size:clamp(20px,5vw,30px);
+  line-height:2;
+  color:#fff
+}
+
+/* Ending */
+
+#ending{
+  min-height:75vh;
+  background:
+    radial-gradient(circle,#461229,#0c070b 50%,#040304)
+}
+
+.end-title{
+  font-size:clamp(55px,14vw,120px);
+  font-weight:bold;
+  line-height:1
+}
+
+.end-title span{
+  display:block;
+  color:#ff4f91;
+  text-shadow:
+    0 0 20px #ff4f91,
+    0 0 60px rgba(255,79,145,.6)
+}
+
+.signature{
+  margin-top:40px;
+  font-size:clamp(28px,7vw,50px);
+  letter-spacing:5px
+}
+
+/* Reveal animation */
+
+.reveal{
+  opacity:0;
+  transform:translateY(50px);
+  transition:1s
+}
+
+.reveal.show{
+  opacity:1;
+  transform:translateY(0)
+}
+
+/* Progress */
+
+#progress{
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:1000;
+  height:4px;
+  width:0;
+  background:linear-gradient(90deg,#ff4f91,#a93ee6);
+  box-shadow:0 0 12px #ff4f91
+}
+
+/* Music and top buttons */
+
+.circle-btn{
+  position:fixed;
+  z-index:100;
+  right:18px;
+  width:52px;
+  height:52px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.25);
+  background:rgba(20,8,16,.75);
+  backdrop-filter:blur(8px);
+  color:white;
+  font-size:20px;
+  cursor:pointer
+}
+
+#musicBtn{
+  top:18px
+}
+
+#topBtn{
+  bottom:18px;
+  opacity:0;
+  pointer-events:none;
+  transition:.4s
+}
+
+#topBtn.show{
+  opacity:1;
+  pointer-events:auto
+}
+
+/* Hearts */
+
+.floating-heart{
+  position:fixed;
+  z-index:1;
+  bottom:-40px;
+  color:rgba(255,79,145,.45);
+  pointer-events:none;
+  animation:floatHeart linear forwards
+}
+
+/* Lightbox */
+
+#lightbox{
+  position:fixed;
+  inset:0;
+  z-index:5000;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:15px;
+  background:rgba(0,0,0,.95)
+}
+
+#lightbox.open{
+  display:flex
+}
+
+#lightbox img{
+  max-width:96vw;
+  max-height:90vh;
+  object-fit:contain;
+  border-radius:15px
+}
+
+#closeLightbox{
+  position:absolute;
+  top:18px;
+  right:18px;
+  width:50px;
+  height:50px;
+  border:0;
+  border-radius:50%;
+  background:white;
+  color:black;
+  font-size:30px;
+  cursor:pointer
+}
+
+@media(min-width:750px){
+  .gallery{
+    grid-template-columns:repeat(4,1fr)
+  }
+}
+
+@keyframes loading{
+  to{width:100%}
+}
+
+@keyframes pulse{
+  to{transform:scale(1.06)}
+}
+
+@keyframes beat{
+  50%{transform:scale(1.3)}
+}
+
+@keyframes buttonGlow{
+  to{
+    box-shadow:0 10px 60px rgba(255,79,145,.8)
+  }
+}
+
+@keyframes down{
+  50%{
+    transform:translate(-50%,10px)
+  }
+}
+
+@keyframes floatHeart{
+  to{
+    transform:translateY(-115vh) rotate(360deg);
+    opacity:0
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div id="loader">
+  <div class="loader-box">
+    <div class="loader-logo">M &amp; M</div>
+    <div class="loader-heart">♥</div>
+    <div class="loading-line"></div>
+  </div>
+</div>
+
+<div id="progress"></div>
+
+<button class="circle-btn" id="musicBtn">♫</button>
+<button class="circle-btn" id="topBtn">♥</button>
+
+<!-- لو رفعت أغنية سمّيها music.mp3 -->
+<audio id="music" src="music.mp3" loop></audio>
+
+<main>
+
+<section id="hero">
+  <div class="photo-bg"></div>
+  <div class="overlay"></div>
+
+  <div class="content reveal">
+    <h1 class="hero-title">
+      LOVE U
+      <span>MARIAM</span>
+    </h1>
+
+    <p class="hero-text">
+      E7na nestahal forsa a7san.
+    </p>
+
+    <button class="open-btn" id="openBtn">
+      OPEN
+    </button>
+  </div>
+
+  <div class="down">⌄</div>
+</section>
+
+<section id="change">
+  <div class="photo-bg"></div>
+  <div class="overlay"></div>
+
+  <div class="content card reveal">
+    <h2 class="title">
+      Ana bgad
+      <span class="pink glow">etghayart.</span>
+    </h2>
+
+    <div class="text">
+      <p>
+        Ana 3aref en el kalam lwa7do msh kefaya,
+        bas ana bgad etghayart.
+      </p>
+
+      <p>
+        Fehemt ghalati, w et3alemt kan lazem
+        a3mel eh b shakl a7san.
+      </p>
+
+      <p>
+        Ana msh 3ayez n3eed elly fat.
+        Ana 3ayez nebda men gedid,
+        b tafahom aktar, w b nos5a a7san meny. ❤️
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="video-section">
+  <div class="content reveal">
+
+    <h2 class="title">
+      Fakra de? 😂❤️
+    </h2>
+
+    <div class="video-frame">
+      <video controls playsinline preload="metadata">
+        <source
+          src="7C6CF41F-D040-4F12-8FC6-70D1D77A69F0.mov"
+          type="video/quicktime">
+      </video>
+    </div>
+
+    <p class="video-message">
+      Ana b7bk awy ya Roma,
+      w msh h3oz 7ad zyk bgd 💓
+    </p>
+
+  </div>
+</section>
+
+<section id="gallery">
+  <div class="content reveal">
+
+    <h2 class="title">
+      Our <span class="pink glow">Memories</span> 📸❤️
+    </h2>
+
+    <div class="gallery">
+
+      <button class="photo">
+        <img src="IMG_1610.jpeg" alt="Our memory 1">
+      </button>
+
+      <button class="photo">
+        <img src="IMG_2111.jpeg" alt="Our memory 2">
+      </button>
+
+      <button class="photo">
+        <img src="IMG_2113.jpeg" alt="Our memory 3">
+      </button>
+
+      <button class="photo">
+        <img src="IMG_6933.jpeg" alt="Our memory 4">
+      </button>
+
+    </div>
+
+    <div class="divider">♥</div>
+
+    <p class="text">
+      Kam sora bas… wara kol wa7da
+      fe 7ekaya w zekrayat kteer.
+    </p>
+
+  </div>
+</section>
+
+<section class="video-section">
+  <div class="content reveal">
+
+    <h2 class="title">
+      <span class="pink glow">Zekrayatna</span> 🎬❤️
+    </h2>
+
+    <div class="video-frame wide">
+      <video controls playsinline preload="metadata">
+        <source
+          src="copy_74B0BDB7-D3D2-4C28-9E55-D951A10EC0D6.mov"
+          type="video/quicktime">
+      </video>
+    </div>
+
+    <p class="text">
+      Momken el wa2t y3ady…
+      bas el zekrayat el 7elwa btefdal.
+    </p>
+
+  </div>
+</section>
+
+<section id="choice">
+  <div class="content reveal">
+
+    <p class="choice-text">
+      W fe el a5er…
+      <br>
+      <span class="pink glow">
+        ana lesa ba5tarek enty. 💓
+      </span>
+    </p>
+
+  </div>
+</section>
+
+<section id="final">
+  <div class="photo-bg"></div>
+  <div class="overlay"></div>
+
+  <div class="content card reveal">
+
+    <h2 class="title pink glow">
+      LOVE U MARIAM ❤️
+    </h2>
+
+    <p class="arabic">
+      يا مريم، أنا شايف إن اللي بينا يستاهل نحاول تاني،
+      وكل حاجة تتعمل عشانك.
+      <br><br>
+      أنا محبتش قدك. إنتِ بالنسبالي الشخص اللي حسيت
+      معاه كل حاجة بجد، والشخص اللي غيّر فيا.
+      <br><br>
+      بحبك أوي 💓
+    </p>
+
+  </div>
+</section>
+
+<section id="ending">
+  <div class="content reveal">
+
+    <div class="end-title">
+      LOVE U
+      <span>MARIAM</span>
+    </div>
+
+    <div class="signature">
+      M &amp; M ❤️
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<div id="lightbox">
+  <button id="closeLightbox">×</button>
+  <img id="lightboxImg" src="" alt="Our memory">
+</div>
+
+<script>
+const loader = document.getElementById("loader");
+const music = document.getElementById("music");
+const musicBtn = document.getElementById("musicBtn");
+const openBtn = document.getElementById("openBtn");
+const topBtn = document.getElementById("topBtn");
+const progress = document.getElementById("progress");
+
+let musicPlaying = false;
+
+window.addEventListener("load", function(){
+  setTimeout(function(){
+    loader.classList.add("hide");
+  },2200);
+});
+
+openBtn.addEventListener("click", function(){
+  document.getElementById("change").scrollIntoView({
+    behavior:"smooth"
+  });
+
+  music.play().then(function(){
+    musicPlaying = true;
+    musicBtn.textContent = "❚❚";
+  }).catch(function(){});
+});
+
+musicBtn.addEventListener("click", function(){
+  if(musicPlaying){
+    music.pause();
+    musicPlaying = false;
+    musicBtn.textContent = "♫";
+  }else{
+    music.play().then(function(){
+      musicPlaying = true;
+      musicBtn.textContent = "❚❚";
+    }).catch(function(){
+      alert("ارفع الأغنية باسم music.mp3");
+    });
+  }
+});
+
+const observer = new IntersectionObserver(function(entries){
+  entries.forEach(function(entry){
+    if(entry.isIntersecting){
+      entry.target.classList.add("show");
+
+      const section = entry.target.closest("section");
+      if(section){
+        section.classList.add("active");
+      }
+    }
+  });
+},{
+  threshold:.18
+});
+
+document.querySelectorAll(".reveal").forEach(function(element){
+  observer.observe(element);
+});
+
+window.addEventListener("scroll", function(){
+  const pageHeight =
+    document.documentElement.scrollHeight - window.innerHeight;
+
+  const percentage =
+    pageHeight > 0 ? (window.scrollY / pageHeight) * 100 : 0;
+
+  progress.style.width = percentage + "%";
+
+  if(window.scrollY > 700){
+    topBtn.classList.add("show");
+  }else{
+    topBtn.classList.remove("show");
+  }
+});
+
+topBtn.addEventListener("click", function(){
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+});
+
+const lightbox = document.getElementById("lightbox");
+const lightboxImg = document.getElementById("lightboxImg");
+const closeLightbox = document.getElementById("closeLightbox");
+
+document.querySelectorAll(".photo img").forEach(function(img){
+  img.parentElement.addEventListener("click", function(){
+    lightboxImg.src = img.src;
+    lightbox.classList.add("open");
+    document.body.style.overflow = "hidden";
+  });
+});
+
+function closePhoto(){
+  lightbox.classList.remove("open");
+  document.body.style.overflow = "";
+}
+
+closeLightbox.addEventListener("click", closePhoto);
+
+lightbox.addEventListener("click", function(event){
+  if(event.target === lightbox){
+    closePhoto();
+  }
+});
+
+function createHeart(){
+  const heart = document.createElement("span");
+
+  heart.className = "floating-heart";
+  heart.textContent = "♥";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = 14 + Math.random() * 25 + "px";
+  heart.style.animationDuration = 5 + Math.random() * 5 + "s";
+
+  document.body.appendChild(heart);
+
+  setTimeout(function(){
+    heart.remove();
+  },10000);
+}
+
+setInterval(createHeart,850);
+</script>
+
+</body>
+</html>
